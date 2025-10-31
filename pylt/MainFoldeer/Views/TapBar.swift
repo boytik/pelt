@@ -14,7 +14,7 @@ struct TabItem: Identifiable, Hashable {
 }
 
 private let tabs: [TabItem] = [
-  .init(tab: .tvRemote, title: "TV Remote", systemImage: "appletvremote.gen3"),
+  .init(tab: .tvRemote, title: "Remote", systemImage: "appletvremote.gen3"),
   .init(tab: .apps,     title: "Apps",      systemImage: "square.grid.2x2"),
   .init(tab: .insights, title: "Insights",  systemImage: "text.book.closed"),
   .init(tab: .settings, title: "Settings",  systemImage: "gearshape")
@@ -30,7 +30,7 @@ struct ContentView: View {
       // Контент вкладок
       Group {
         switch selected {
-        case .tvRemote: TVRemoteView()
+        case .tvRemote: RemoteView()
         case .apps:     AppsView()
         case .insights: InsightsView()
         case .settings: SettingsView()

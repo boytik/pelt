@@ -4,7 +4,8 @@ import SwiftUI
 struct TasteCoreApp: App {
   var body: some Scene {
     WindowGroup {
-        OnboardingView(onFinish: {}) // <- хост, который решает что показывать
+//        OnboardingView(onFinish: {})
+        ContentView()
     }
   }
 }

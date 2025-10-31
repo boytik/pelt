@@ -20,13 +20,12 @@ struct OnboardingView: View {
 
       VStack(spacing: 20) {
         // Картинка
-          // Картинка — во всю ширину + обрезаем внутренние поля (если есть)
           Image(current.imageName)
             .resizable()
-            .scaledToFit()                           // сохраняем пропорции
-            .frame(maxWidth: .infinity, alignment: .center)
-            .modifier(CropTransparentPadding(horizontal: 24, vertical: 0)) // ← подстрой!
-            .padding(.top, 24)
+            .scaledToFill()
+            .frame(maxWidth: .infinity, maxHeight: 521)
+            .clipped()
+            .ignoresSafeArea(.all, edges: .top)
 
 
 
@@ -66,7 +65,7 @@ struct OnboardingView: View {
             )
         }
         .padding(.horizontal, 20)
-        .padding(.bottom, current.isFinal ? 8 : 24)
+        .padding(.bottom, 80)
 
         // Низ — только на финале
         if current.isFinal {
