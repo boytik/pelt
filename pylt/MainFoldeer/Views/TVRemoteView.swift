@@ -3,15 +3,16 @@ import SwiftUI
 struct RemoteView: View {
   var body: some View {
     ZStack {
-      Color.black.ignoresSafeArea()
+      Color("Bg").ignoresSafeArea()
 
       VStack(spacing: 24) {
-        Spacer(minLength: 0)
+//        Spacer(minLength: 0)
 
         // 🔴 Power — 50×50, по центру
-        IconButton(asset: "TurnOn", width: 50, height: 50)
+        IconButton(asset: "TurnOn", width: 70, height: 70)
           .frame(maxWidth: .infinity)
-          .padding(.bottom, 12)
+//          .padding(.bottom, 12)
+          .padding(.top, 50)
 
         // 🎬 Hulu / Netflix / YouTube
         HStack(spacing: 20) {

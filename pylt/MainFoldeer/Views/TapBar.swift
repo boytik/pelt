@@ -6,19 +6,6 @@ enum Tab: Hashable {
   case tvRemote, apps, insights, settings
 }
 
-struct TabItem: Identifiable, Hashable {
-  let id = UUID()
-  let tab: Tab
-  let title: String
-  let systemImage: String
-}
-
-private let tabs: [TabItem] = [
-  .init(tab: .tvRemote, title: "Remote", systemImage: "appletvremote.gen3"),
-  .init(tab: .apps,     title: "Apps",      systemImage: "square.grid.2x2"),
-  .init(tab: .insights, title: "Insights",  systemImage: "text.book.closed"),
-  .init(tab: .settings, title: "Settings",  systemImage: "gearshape")
-]
 
 // MARK: - Root
 
@@ -26,62 +13,67 @@ struct ContentView: View {
   @State private var selected: Tab = .tvRemote
 
   var body: some View {
-    ZStack(alignment: .bottom) {
-      // Контент вкладок
-      Group {
-        switch selected {
-        case .tvRemote: RemoteView()
-        case .apps:     AppsView()
-        case .insights: InsightsView()
-        case .settings: SettingsView()
+    TabView(selection: $selected) {
+      RemoteView()
+        .tabItem {
+          Image(systemName: "appletvremote.gen3")
+          Text("Remote")
         }
-      }
-      .frame(maxWidth: .infinity, maxHeight: .infinity)
-      .background(Color.black.edgesIgnoringSafeArea(.all))
-
-      // Кастомный таб-бар
-      CustomTabBar(selected: $selected, items: tabs)
-        .padding(.horizontal, 16)
-        .padding(.bottom, 12)
+        .tag(Tab.tvRemote)
+      
+      AppsView()
+        .tabItem {
+          Image(systemName: "square.grid.2x2")
+          Text("Apps")
+        }
+        .tag(Tab.apps)
+      
+      InsightsView()
+        .tabItem {
+          Image(systemName: "text.book.closed")
+          Text("Insights")
+        }
+        .tag(Tab.insights)
+      
+      SettingsView()
+        .tabItem {
+          Image(systemName: "gearshape")
+          Text("Settings")
+        }
+        .tag(Tab.settings)
     }
-    .background(Color.black)
-    .ignoresSafeArea(.keyboard)
+    .accentColor(Color("MainRed")) // цвет активной вкладки из Assets
+    .background(Color("Bg").ignoresSafeArea()) // фон из Assets
+    .onAppear {
+      setupTabBarAppearance()
+    }
   }
-}
-
-// MARK: - Custom Tab Bar
-
-struct CustomTabBar: View {
-  @Binding var selected: Tab
-  let items: [TabItem]
-
-  var body: some View {
-    HStack(spacing: 24) {
-      ForEach(items) { item in
-        Button {
-          selected = item.tab
-        } label: {
-          VStack(spacing: 6) {
-            Image(systemName: item.systemImage)
-              .font(.system(size: 18, weight: .regular))
-            Text(item.title)
-              .font(.footnote)
-          }
-          .frame(maxWidth: .infinity)
-          .foregroundStyle(selected == item.tab ? Color.red : Color.gray)
-          .contentShape(Rectangle())
-          .padding(.vertical, 10)
-        }
-        .buttonStyle(.plain)
-      }
+  
+  private func setupTabBarAppearance() {
+    let appearance = UITabBarAppearance()
+    appearance.configureWithOpaqueBackground()
+    
+    // Фон таб-бара
+    if let bgColor = UIColor(named: "Bg") {
+      appearance.backgroundColor = bgColor
     }
-    .padding(.horizontal, 12)
-    .background(
-      RoundedRectangle(cornerRadius: 16, style: .continuous)
-        .fill(Color(white: 0.12)) // тёмная плашка как на скрине
-        .shadow(color: Color.black.opacity(0.25), radius: 12, x: 0, y: -2)
-    )
-    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+    
+    // Цвет невыбранных элементов (светло-серый)
+    appearance.stackedLayoutAppearance.normal.iconColor = UIColor.lightGray
+    appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
+      .foregroundColor: UIColor.lightGray
+    ]
+    
+    // Цвет выбранных элементов (MainRed)
+    if let mainRedColor = UIColor(named: "MainRed") {
+      appearance.stackedLayoutAppearance.selected.iconColor = mainRedColor
+      appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
+        .foregroundColor: mainRedColor
+      ]
+    }
+    
+    UITabBar.appearance().standardAppearance = appearance
+    UITabBar.appearance().scrollEdgeAppearance = appearance
   }
 }
 

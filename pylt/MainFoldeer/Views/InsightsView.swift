@@ -48,7 +48,7 @@ struct InsightsView: View {
 
   var body: some View {
     ZStack {
-      Color.black.ignoresSafeArea()
+      Color("Bg").ignoresSafeArea()
 
       if let item = selected {
         // ---------- Экран контента (без скролла) ----------
@@ -70,7 +70,7 @@ struct InsightsView: View {
         // «липкая» шапка с центрированным заголовком и крестиком
         .safeAreaInset(edge: .top) {
           ZStack {
-            Color.black.opacity(1.0).frame(height: 52)
+            Color("Bg").opacity(1.0).frame(height: 52)
             HStack {
               Spacer()
               Text(item.navTitle)

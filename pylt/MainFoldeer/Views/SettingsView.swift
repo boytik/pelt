@@ -17,7 +17,7 @@ struct SettingsView: View {
 
   var body: some View {
     ZStack {
-      Color.black.ignoresSafeArea()
+      Color("Bg").ignoresSafeArea()
 
       VStack(spacing: 16) {
         // Центрированный заголовок

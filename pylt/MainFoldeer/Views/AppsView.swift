@@ -4,7 +4,7 @@ import SwiftUI
 struct AppsView: View {
   var body: some View {
     ZStack {
-      Color.black.ignoresSafeArea()
+      Color("Bg").ignoresSafeArea()
       Text("Apps")
         .foregroundStyle(.white)
     }
