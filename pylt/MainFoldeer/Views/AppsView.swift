@@ -1,9 +1,4 @@
-//
-//  Apps.swift
-//  RemoteForLg
-//
-//  Created by Евгений on 31.10.2025.
-//
+
 
 import SwiftUI
 struct AppsView: View {

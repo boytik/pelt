@@ -39,60 +39,84 @@ enum Insight: String, CaseIterable, Identifiable {
 
 // MARK: - Экран
 
+import SwiftUI
+
+import SwiftUI
+
 struct InsightsView: View {
-  @State private var selected: Insight? = nil  
+  @State private var selected: Insight? = nil
 
   var body: some View {
     ZStack {
       Color.black.ignoresSafeArea()
 
       if let item = selected {
-        // ---------- Экран контента ----------
+        // ---------- Экран контента (без скролла) ----------
+        VStack(spacing: 0) {
+          RoundedRectangle(cornerRadius: 16, style: .continuous)
+            .fill(Color(white: 0.16))
+            .shadow(color: .black.opacity(0.35), radius: 12, x: 0, y: 6)
+            .overlay(
+              Text(item.bodyText)
+                .foregroundStyle(.white)
+                .font(.body)
+                .padding(18)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .fixedSize(horizontal: false, vertical: true)
+            )
+            .padding(.horizontal, 16)
+            .padding(.top, 8)
+        }
+        // «липкая» шапка с центрированным заголовком и крестиком
+        .safeAreaInset(edge: .top) {
+          ZStack {
+            Color.black.opacity(1.0).frame(height: 52)
+            HStack {
+              Spacer()
+              Text(item.navTitle)
+                .font(.headline)
+                .foregroundStyle(.white.opacity(0.9))
+              Spacer()
+              Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
+                  selected = nil
+                }
+              } label: {
+                Image(systemName: "xmark.circle.fill")
+                  .font(.title3)
+                  .foregroundStyle(Color.mainRed) // ваш MainRed из ассетов
+              }
+              .padding(.trailing, 16)
+              .contentShape(Rectangle())
+            }
+          }
+        }
+        // ✅ Анимация появления/ухода карточки
+        .transition(.asymmetric(
+          insertion: .scale(scale: 0.92).combined(with: .opacity),
+          removal: .scale(scale: 0.90).combined(with: .opacity)
+        ))
+
+      } else {
+        // ---------- Список кнопок ----------
         VStack(spacing: 16) {
           HStack {
             Spacer()
-            Text(item.navTitle)
-              .font(.headline)
-              .foregroundStyle(.white.opacity(0.9))
+            Text("Insights")
+              .font(.title2.weight(.semibold))
+              .foregroundStyle(.white)
             Spacer()
-            Button {
-              withAnimation(.easeInOut) { selected = nil }
-            } label: {
-              Image(systemName: "xmark.circle.fill")
-                .font(.title3)
-                .foregroundStyle(.white.opacity(0.8))
-            }
-            .contentShape(Rectangle())
           }
-          .padding(.horizontal, 8)
-
-          ScrollView {
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-              .fill(Color(white: 0.16))
-              .overlay(
-                Text(item.bodyText)
-                  .foregroundStyle(.white)
-                  .padding(18)
-                  .frame(maxWidth: .infinity, alignment: .leading)
-              )
-          }
-        }
-        .padding(.horizontal, 16)
-        .padding(.top, 24)
-        .transition(.opacity.combined(with: .move(edge: .trailing)))
-      } else {
-        // ---------- Список кнопок ----------
-        VStack(alignment: .leading, spacing: 16) {
-          Text("Insights")
-            .font(.title2.weight(.semibold))
-            .foregroundStyle(.white)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.bottom, 4)
+          .padding(.top, 24)
 
           VStack(spacing: 12) {
             ForEach(Insight.allCases) { item in
               Button {
-                withAnimation(.easeInOut) { selected = item }
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) {
+                  selected = item
+                }
               } label: {
                 HStack {
                   Text(item.rawValue)
@@ -113,15 +137,14 @@ struct InsightsView: View {
               .buttonStyle(.plain)
             }
           }
+          .padding(.horizontal, 16)
+
+          Spacer()
         }
-        .padding(.horizontal, 16)
-        .padding(.top, 24)
         .transition(.opacity.combined(with: .move(edge: .leading)))
       }
     }
+    // Глобальная анимация на переключение состояния
+    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: selected)
   }
-}
-
-#Preview {
-  InsightsView()
 }

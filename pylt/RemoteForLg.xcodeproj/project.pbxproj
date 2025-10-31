@@ -14,6 +14,7 @@
 		3E52E1652EB4E1320093ABB9 /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E52E1642EB4E1320093ABB9 /* AppsView.swift */; };
 		3E52E1672EB4E13F0093ABB9 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E52E1662EB4E13F0093ABB9 /* InsightsView.swift */; };
 		3E52E1692EB4E14A0093ABB9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E52E1682EB4E14A0093ABB9 /* SettingsView.swift */; };
+		3E52E16E2EB5064F0093ABB9 /* OnbForIphone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E52E16D2EB5064F0093ABB9 /* OnbForIphone.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		3E52E1642EB4E1320093ABB9 /* AppsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
 		3E52E1662EB4E13F0093ABB9 /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		3E52E1682EB4E14A0093ABB9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3E52E16D2EB5064F0093ABB9 /* OnbForIphone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnbForIphone.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 		3E52E15F2EB4D8FF0093ABB9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3E52E16C2EB5058B0093ABB9 /* IphoneOnbording */,
 				3E375D682E658E7F00989A37 /* TapBar.swift */,
 				3E52E1612EB4D93A0093ABB9 /* Start */,
 				3E52E1622EB4E1290093ABB9 /* TVRemoteView.swift */,
@@ -98,6 +101,14 @@
 			children = (
 			);
 			path = Start;
+			sourceTree = "<group>";
+		};
+		3E52E16C2EB5058B0093ABB9 /* IphoneOnbording */ = {
+			isa = PBXGroup;
+			children = (
+				3E52E16D2EB5064F0093ABB9 /* OnbForIphone.swift */,
+			);
+			path = IphoneOnbording;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +187,7 @@
 				3E52E1672EB4E13F0093ABB9 /* InsightsView.swift in Sources */,
 				3E52E1652EB4E1320093ABB9 /* AppsView.swift in Sources */,
 				3E52E1692EB4E14A0093ABB9 /* SettingsView.swift in Sources */,
+				3E52E16E2EB5064F0093ABB9 /* OnbForIphone.swift in Sources */,
 				3E52E1632EB4E1290093ABB9 /* TVRemoteView.swift in Sources */,
 				3E375D6C2E658E7F00989A37 /* RemoteAppApp.swift in Sources */,
 			);
