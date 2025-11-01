@@ -20,6 +20,9 @@
 		3E96FA602EB60AF600B1E2BA /* LGDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E96FA5F2EB60AF600B1E2BA /* LGDiscoveryService.swift */; };
 		3E96FA622EB60B0900B1E2BA /* LGTVControlService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E96FA612EB60B0900B1E2BA /* LGTVControlService.swift */; };
 		3E96FA642EB60B1F00B1E2BA /* DeviceDiscoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E96FA632EB60B1F00B1E2BA /* DeviceDiscoveryView.swift */; };
+		3E96FA6F2EB6332500B1E2BA /* RoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E96FA6E2EB6332500B1E2BA /* RoundController.swift */; };
+		3E96FA712EB6345D00B1E2BA /* TochPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E96FA702EB6345D00B1E2BA /* TochPad.swift */; };
+		3E96FA752EB6365200B1E2BA /* AdvancedTouchpad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E96FA742EB6365200B1E2BA /* AdvancedTouchpad.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		3E96FA612EB60B0900B1E2BA /* LGTVControlService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LGTVControlService.swift; sourceTree = "<group>"; };
 		3E96FA632EB60B1F00B1E2BA /* DeviceDiscoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDiscoveryView.swift; sourceTree = "<group>"; };
 		3E96FA652EB60CE500B1E2BA /* RemoteForLg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "RemoteForLg-Info.plist"; sourceTree = "<group>"; };
+		3E96FA6E2EB6332500B1E2BA /* RoundController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundController.swift; sourceTree = "<group>"; };
+		3E96FA702EB6345D00B1E2BA /* TochPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TochPad.swift; sourceTree = "<group>"; };
+		3E96FA742EB6365200B1E2BA /* AdvancedTouchpad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedTouchpad.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,11 +101,9 @@
 				3E52E16C2EB5058B0093ABB9 /* Onbording */,
 				3E375D682E658E7F00989A37 /* TapBar.swift */,
 				3E52E1612EB4D93A0093ABB9 /* Start */,
-				3E52E1622EB4E1290093ABB9 /* TVRemoteView.swift */,
 				3E52E1642EB4E1320093ABB9 /* AppsView.swift */,
 				3E52E1662EB4E13F0093ABB9 /* InsightsView.swift */,
 				3E52E1682EB4E14A0093ABB9 /* SettingsView.swift */,
-				3E96FA632EB60B1F00B1E2BA /* DeviceDiscoveryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -114,6 +118,7 @@
 		3E52E1612EB4D93A0093ABB9 /* Start */ = {
 			isa = PBXGroup;
 			children = (
+				3E96FA6C2EB6330300B1E2BA /* Remote */,
 			);
 			path = Start;
 			sourceTree = "<group>";
@@ -142,6 +147,26 @@
 				3E96FA612EB60B0900B1E2BA /* LGTVControlService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		3E96FA6C2EB6330300B1E2BA /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				3E52E1622EB4E1290093ABB9 /* TVRemoteView.swift */,
+				3E96FA6D2EB6331100B1E2BA /* RemoteSubs */,
+				3E96FA632EB60B1F00B1E2BA /* DeviceDiscoveryView.swift */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		3E96FA6D2EB6331100B1E2BA /* RemoteSubs */ = {
+			isa = PBXGroup;
+			children = (
+				3E96FA6E2EB6332500B1E2BA /* RoundController.swift */,
+				3E96FA702EB6345D00B1E2BA /* TochPad.swift */,
+				3E96FA742EB6365200B1E2BA /* AdvancedTouchpad.swift */,
+			);
+			path = RemoteSubs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,14 +243,17 @@
 			files = (
 				3E375D6B2E658E7F00989A37 /* TapBar.swift in Sources */,
 				3E96FA622EB60B0900B1E2BA /* LGTVControlService.swift in Sources */,
+				3E96FA6F2EB6332500B1E2BA /* RoundController.swift in Sources */,
 				3E52E1672EB4E13F0093ABB9 /* InsightsView.swift in Sources */,
 				3E52E1652EB4E1320093ABB9 /* AppsView.swift in Sources */,
+				3E96FA712EB6345D00B1E2BA /* TochPad.swift in Sources */,
 				3E96FA5D2EB60AD800B1E2BA /* LGDevice.swift in Sources */,
 				3E52E1692EB4E14A0093ABB9 /* SettingsView.swift in Sources */,
 				3E52E16E2EB5064F0093ABB9 /* OnbForIphone.swift in Sources */,
 				3E96FA642EB60B1F00B1E2BA /* DeviceDiscoveryView.swift in Sources */,
 				3E52E1632EB4E1290093ABB9 /* TVRemoteView.swift in Sources */,
 				3E96FA602EB60AF600B1E2BA /* LGDiscoveryService.swift in Sources */,
+				3E96FA752EB6365200B1E2BA /* AdvancedTouchpad.swift in Sources */,
 				3E52E1702EB52F1B0093ABB9 /* IpadOnbording.swift in Sources */,
 				3E375D6C2E658E7F00989A37 /* RemoteAppApp.swift in Sources */,
 			);

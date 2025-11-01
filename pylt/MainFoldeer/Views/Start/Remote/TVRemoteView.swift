@@ -106,15 +106,14 @@ struct RemoteView: View {
                 
                 // 🔸 Второй блок: Volume / Media / Channel
                 HStack(alignment: .top, spacing: 20) {
-                    // Volume
-                    VStack(spacing: 0) {
-                        IconButton(asset: "2.1", width: 66, height: 66) {
-                            sendCommand(.volumeUp)
-                        }
-                        IconButton(asset: "2.1", width: 66, height: 66) {
-                            sendCommand(.volumeDown)
-                        }
-                    }
+                    // Volume - вертикальная кнопка с двумя зонами
+                    DualVerticalButton(
+                        asset: "2.1",
+                        width: 66,
+                        height: 143,
+                        onTopTap: { sendCommand(.volumeUp) },
+                        onBottomTap: { sendCommand(.volumeDown) }
+                    )
                     
                     // Media controls
                     VStack(spacing: 11) {
@@ -135,22 +134,58 @@ struct RemoteView: View {
                         }
                     }
                     
-                    // Channel
-                    VStack(spacing: 0) {
-                        IconButton(asset: "2.4", width: 66, height: 66) {
-                            sendCommand(.channelUp)
-                        }
-                        IconButton(asset: "2.4", width: 66, height: 66) {
-                            sendCommand(.channelDown)
-                        }
-                    }
+                    // Channel - вертикальная кнопка с двумя зонами
+                    DualVerticalButton(
+                        asset: "2.4",
+                        width: 66,
+                        height: 143,
+                        onTopTap: { sendCommand(.channelUp) },
+                        onBottomTap: { sendCommand(.channelDown) }
+                    )
                 }
+                
+                // Device selection button
+                Button(action: {
+                    showDeviceDiscovery = true
+                }) {
+                    HStack(spacing: 12) {
+                        Image(systemName: "tv.and.hifispeaker.fill")
+                            .font(.system(size: 18, weight: .medium))
+                        
+                        if let device = selectedDevice {
+                            Text(device.name)
+                                .font(.system(size: 16, weight: .medium))
+                        } else {
+                            Text("Connect your device")
+                                .font(.system(size: 16, weight: .medium))
+                        }
+                        
+                        Spacer()
+                        
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 16)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.white.opacity(0.1))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                            )
+                    )
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 24)
                 
                 Spacer(minLength: 0)
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.vertical, 24)
-            .padding(.bottom, 56 + 12)
+            .padding(.bottom, 140) // Increased space above tab bar
             
             // Connection status overlay
             if showConnectionStatus {
@@ -176,10 +211,8 @@ struct RemoteView: View {
             }
         }
         .onAppear {
-            if selectedDevice == nil {
-                // Show device discovery on first launch
-                showDeviceDiscovery = true
-            } else if let service = controlService, !service.isConnected {
+            // Only auto-connect if device is already selected
+            if let service = controlService, !service.isConnected {
                 Task { @MainActor in
                     service.connect()
                 }
@@ -203,26 +236,12 @@ struct RemoteView: View {
                         .foregroundColor(.white.opacity(0.8))
                 }
             } else {
-                Text("Не подключено")
+                Text("Not connected")
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(.white.opacity(0.5))
             }
             
             Spacer()
-            
-            // Change device button
-            Button(action: {
-                showDeviceDiscovery = true
-            }) {
-                Image(systemName: "tv.and.hifispeaker.fill")
-                    .font(.system(size: 16))
-                    .foregroundColor(.white.opacity(0.6))
-                    .padding(8)
-                    .background(
-                        Circle()
-                            .fill(Color.white.opacity(0.1))
-                    )
-            }
         }
         .padding(.horizontal, 20)
         .padding(.top, 12)
@@ -236,14 +255,14 @@ struct RemoteView: View {
             
             HStack {
                 if let error = controlService?.errorMessage {
-                    Text("Ошибка: \(error)")
+                    Text("Error: \(error)")
                         .font(.system(size: 14))
                         .foregroundColor(.white)
                 } else if controlService?.isPaired == true {
                     HStack(spacing: 8) {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
-                        Text("Подключено")
+                        Text("Connected")
                             .font(.system(size: 14))
                             .foregroundColor(.white)
                     }
@@ -252,7 +271,7 @@ struct RemoteView: View {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
                             .scaleEffect(0.8)
-                        Text("Подключение...")
+                        Text("Connecting...")
                             .font(.system(size: 14))
                             .foregroundColor(.white)
                     }
@@ -323,6 +342,53 @@ private struct IconButton: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+    }
+}
+
+// MARK: - Вертикальная кнопка с двумя зонами нажатия
+
+private struct DualVerticalButton: View {
+    let asset: String
+    let width: CGFloat
+    let height: CGFloat
+    let onTopTap: () -> Void
+    let onBottomTap: () -> Void
+    
+    var body: some View {
+        ZStack {
+            // Фоновое изображение
+            Image(asset)
+                .resizable()
+                .renderingMode(.original)
+                .scaledToFit()
+                .frame(width: width, height: height)
+            
+            // Две невидимые кнопки для верхней и нижней части
+            VStack(spacing: 0) {
+                Button(action: {
+                    let generator = UIImpactFeedbackGenerator(style: .medium)
+                    generator.impactOccurred()
+                    onTopTap()
+                }) {
+                    Color.clear
+                        .frame(width: width, height: height / 2)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                
+                Button(action: {
+                    let generator = UIImpactFeedbackGenerator(style: .medium)
+                    generator.impactOccurred()
+                    onBottomTap()
+                }) {
+                    Color.clear
+                        .frame(width: width, height: height / 2)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .frame(width: width, height: height)
     }
 }
 

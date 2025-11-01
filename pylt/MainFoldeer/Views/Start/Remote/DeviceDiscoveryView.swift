@@ -5,13 +5,16 @@ struct DeviceDiscoveryView: View {
     @Binding var selectedDevice: LGDevice?
     @Environment(\.dismiss) private var dismiss
     
+    @State private var showNoDevicesAlert = false
+    @State private var showConnectionErrorAlert = false
+    
     var body: some View {
         ZStack {
             Color("Bg").ignoresSafeArea()
             
             VStack(spacing: 24) {
                 // Header
-                Text("Найти телевизор")
+                Text("Find TV")
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(.white)
                     .padding(.top, 60)
@@ -23,7 +26,7 @@ struct DeviceDiscoveryView: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
                             .scaleEffect(1.5)
                         
-                        Text("Сканирование сети...")
+                        Text("Scanning network...")
                             .font(.system(size: 16))
                             .foregroundColor(.white.opacity(0.7))
                     }
@@ -35,11 +38,11 @@ struct DeviceDiscoveryView: View {
                             .font(.system(size: 60))
                             .foregroundColor(.white.opacity(0.3))
                         
-                        Text("Устройства не найдены")
+                        Text("No devices found")
                             .font(.system(size: 18, weight: .medium))
                             .foregroundColor(.white)
                         
-                        Text("Убедитесь, что телевизор включен\nи подключен к той же Wi-Fi сети")
+                        Text("Make sure your TV is on\nand connected to the same Wi-Fi network")
                             .font(.system(size: 14))
                             .foregroundColor(.white.opacity(0.6))
                             .multilineTextAlignment(.center)
@@ -52,8 +55,7 @@ struct DeviceDiscoveryView: View {
                         VStack(spacing: 12) {
                             ForEach(discoveryService.discoveredDevices) { device in
                                 DeviceRow(device: device) {
-                                    selectedDevice = device
-                                    dismiss()
+                                    selectDevice(device)
                                 }
                             }
                         }
@@ -68,7 +70,7 @@ struct DeviceDiscoveryView: View {
                     HStack {
                         Image(systemName: "arrow.clockwise")
                             .font(.system(size: 18, weight: .semibold))
-                        Text(discoveryService.isScanning ? "Сканирование..." : "Сканировать снова")
+                        Text(discoveryService.isScanning ? "Scanning..." : "Scan again")
                             .font(.system(size: 18, weight: .semibold))
                     }
                     .foregroundColor(.white)
@@ -84,8 +86,57 @@ struct DeviceDiscoveryView: View {
                 .padding(.bottom, 40)
             }
         }
+        .alert("Couldn't find the devices", isPresented: $showNoDevicesAlert) {
+            Button("Cancel", role: .cancel) {
+                dismiss()
+            }
+            Button("Try again") {
+                discoveryService.startDiscovery()
+            }
+        } message: {
+            Text("Check the connection and try again later")
+        }
+        .alert("Error connecting to the selected TV", isPresented: $showConnectionErrorAlert) {
+            Button("Cancel", role: .cancel) { }
+            Button("Try again") {
+                if let device = selectedDevice {
+                    selectDevice(device)
+                }
+            }
+        } message: {
+            Text("Check the connection and try again later")
+        }
         .onAppear {
             discoveryService.startDiscovery()
+        }
+        .onChange(of: discoveryService.isScanning) { isScanning in
+            // Show alert if scanning finished and no devices found
+            if !isScanning && discoveryService.discoveredDevices.isEmpty {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    showNoDevicesAlert = true
+                }
+            }
+        }
+    }
+    
+    private func selectDevice(_ device: LGDevice) {
+        // Try to connect to device
+        let testService = LGTVControlService(device: device)
+        
+        Task { @MainActor in
+            testService.connect()
+            
+            // Wait a bit to see if connection succeeds
+            try? await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
+            
+            if testService.isPaired || testService.isConnected {
+                // Success - set device and dismiss
+                selectedDevice = device
+                dismiss()
+            } else {
+                // Failed to connect - show error
+                showConnectionErrorAlert = true
+            }
         }
     }
 }
