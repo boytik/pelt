@@ -16,6 +16,10 @@
 		3E52E1692EB4E14A0093ABB9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E52E1682EB4E14A0093ABB9 /* SettingsView.swift */; };
 		3E52E16E2EB5064F0093ABB9 /* OnbForIphone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E52E16D2EB5064F0093ABB9 /* OnbForIphone.swift */; };
 		3E52E1702EB52F1B0093ABB9 /* IpadOnbording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E52E16F2EB52F1B0093ABB9 /* IpadOnbording.swift */; };
+		3E96FA5D2EB60AD800B1E2BA /* LGDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E96FA5C2EB60AD800B1E2BA /* LGDevice.swift */; };
+		3E96FA602EB60AF600B1E2BA /* LGDiscoveryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E96FA5F2EB60AF600B1E2BA /* LGDiscoveryService.swift */; };
+		3E96FA622EB60B0900B1E2BA /* LGTVControlService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E96FA612EB60B0900B1E2BA /* LGTVControlService.swift */; };
+		3E96FA642EB60B1F00B1E2BA /* DeviceDiscoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E96FA632EB60B1F00B1E2BA /* DeviceDiscoveryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +33,11 @@
 		3E52E1682EB4E14A0093ABB9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3E52E16D2EB5064F0093ABB9 /* OnbForIphone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnbForIphone.swift; sourceTree = "<group>"; };
 		3E52E16F2EB52F1B0093ABB9 /* IpadOnbording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IpadOnbording.swift; sourceTree = "<group>"; };
+		3E96FA5C2EB60AD800B1E2BA /* LGDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LGDevice.swift; sourceTree = "<group>"; };
+		3E96FA5F2EB60AF600B1E2BA /* LGDiscoveryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LGDiscoveryService.swift; sourceTree = "<group>"; };
+		3E96FA612EB60B0900B1E2BA /* LGTVControlService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LGTVControlService.swift; sourceTree = "<group>"; };
+		3E96FA632EB60B1F00B1E2BA /* DeviceDiscoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDiscoveryView.swift; sourceTree = "<group>"; };
+		3E96FA652EB60CE500B1E2BA /* RemoteForLg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "RemoteForLg-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +54,7 @@
 		3E375D502E658E7900989A37 = {
 			isa = PBXGroup;
 			children = (
+				3E96FA652EB60CE500B1E2BA /* RemoteForLg-Info.plist */,
 				3E375D6A2E658E7F00989A37 /* MainFoldeer */,
 				3E375D5A2E658E7900989A37 /* Products */,
 			);
@@ -61,6 +71,8 @@
 		3E375D6A2E658E7F00989A37 /* MainFoldeer */ = {
 			isa = PBXGroup;
 			children = (
+				3E96FA5E2EB60AE900B1E2BA /* Service */,
+				3E96FA592EB60ABE00B1E2BA /* Models */,
 				3E375D692E658E7F00989A37 /* RemoteAppApp.swift */,
 				3E52E1602EB4D9080093ABB9 /* ViewModels */,
 				3E52E15F2EB4D8FF0093ABB9 /* Views */,
@@ -87,6 +99,7 @@
 				3E52E1642EB4E1320093ABB9 /* AppsView.swift */,
 				3E52E1662EB4E13F0093ABB9 /* InsightsView.swift */,
 				3E52E1682EB4E14A0093ABB9 /* SettingsView.swift */,
+				3E96FA632EB60B1F00B1E2BA /* DeviceDiscoveryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -112,6 +125,23 @@
 				3E52E16F2EB52F1B0093ABB9 /* IpadOnbording.swift */,
 			);
 			path = Onbording;
+			sourceTree = "<group>";
+		};
+		3E96FA592EB60ABE00B1E2BA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3E96FA5C2EB60AD800B1E2BA /* LGDevice.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3E96FA5E2EB60AE900B1E2BA /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				3E96FA5F2EB60AF600B1E2BA /* LGDiscoveryService.swift */,
+				3E96FA612EB60B0900B1E2BA /* LGTVControlService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,11 +217,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E375D6B2E658E7F00989A37 /* TapBar.swift in Sources */,
+				3E96FA622EB60B0900B1E2BA /* LGTVControlService.swift in Sources */,
 				3E52E1672EB4E13F0093ABB9 /* InsightsView.swift in Sources */,
 				3E52E1652EB4E1320093ABB9 /* AppsView.swift in Sources */,
+				3E96FA5D2EB60AD800B1E2BA /* LGDevice.swift in Sources */,
 				3E52E1692EB4E14A0093ABB9 /* SettingsView.swift in Sources */,
 				3E52E16E2EB5064F0093ABB9 /* OnbForIphone.swift in Sources */,
+				3E96FA642EB60B1F00B1E2BA /* DeviceDiscoveryView.swift in Sources */,
 				3E52E1632EB4E1290093ABB9 /* TVRemoteView.swift in Sources */,
+				3E96FA602EB60AF600B1E2BA /* LGDiscoveryService.swift in Sources */,
 				3E52E1702EB52F1B0093ABB9 /* IpadOnbording.swift in Sources */,
 				3E375D6C2E658E7F00989A37 /* RemoteAppApp.swift in Sources */,
 			);
@@ -331,6 +365,9 @@
 				DEVELOPMENT_TEAM = 6WBSBWSNWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RemoteForLg-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "\"Required to discover LG TVs on your local network.\"\n";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -364,6 +401,9 @@
 				DEVELOPMENT_TEAM = 6WBSBWSNWN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RemoteForLg-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "\"Required to discover LG TVs on your local network.\"\n";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
